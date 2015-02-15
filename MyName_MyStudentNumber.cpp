@@ -95,7 +95,7 @@ int main(int argc,char* argv[])
             if (j%2 == 0){
               //right
               q = Eigen::VectorXd(qstart1.segment(0,7));
-              while ((q - q_old).abs().maxCoeff() > epsilon){
+              while ((q - q_old).cwiseAbs().maxCoeff() > epsilon){
                 //Repeat until change is small enough
                 q_merged << q, Eigen::VectorXd::Zero(11);
                 y = bax.GetIK(q_merged);
@@ -104,8 +104,8 @@ int main(int argc,char* argv[])
                 J_right = J.block(0,0,3,7);
                 Jpinv_right = Winv * J_right.transpose() * (J_right * Winv * J_right.transpose() + Cinv).inverse();
                 
-                nullspace = (Eigen::MatrixXd::Identity(J_right.size()) - Jpinv_right * J_right) * (q_comf.segment(0, 7) - q);  
-                q_diff = Jpinv_right * (target.segment(i*3,3) - y1.segment(0, 3)) + nullspace;
+                nullspace = (Eigen::MatrixXd::Identity(J_right.rows(), J_right.cols()) - Jpinv_right * J_right) * (q_comf.segment(0, 7) - q);  
+                q_diff = Jpinv_right * (target.segment(i*3,3) - y.segment(0, 3)) + nullspace;
                 q_old = q;
                 q = q + q_diff;
               }
@@ -121,8 +121,8 @@ int main(int argc,char* argv[])
                 J_left = J.block(6,7,3,7);
                 Jpinv_left = Winv * J_left.transpose() * (J_right * Winv * J_left.transpose() + Cinv).inverse();
 
-                nullspace = (Eigen::MatrixXd::Identity(J_left.size()) - Jpinv_left * J_left) * (q_comf.segment(9, 7) - q);  
-                q_diff = Jpinv_left * (target.segment(i*3,3) - y1.segment(6, 3)) + nullspace;
+                nullspace = (Eigen::MatrixXd::Identity(J_right.rows(), J_right.cols()) - Jpinv_left * J_left) * (q_comf.segment(9, 7) - q);  
+                q_diff = Jpinv_left * (target.segment(i*3,3) - y.segment(6, 3)) + nullspace;
                 q_old = q;
                 q = q + q_diff;
               }
@@ -154,8 +154,8 @@ int main(int argc,char* argv[])
       Jpinv_right = Winv * J_right.transpose() * (J_right * Winv * J_right.transpose() + Cinv).inverse();
       
 
-      nullspace = (Eigen::MatrixXd::Identity(J_right.size()) - Jpinv_right * J_right) * (q_comf.segment(0, 7) - q);  
-      q_diff = Jpinv_right * (target0 - y1.segment(0, 3)) + nullspace;
+      nullspace = (Eigen::MatrixXd::Identity(J_right.rows(), J_right.cols()) - Jpinv_right * J_right) * (q_comf.segment(0, 7) - q);  
+      q_diff = Jpinv_right * (target0 - y.segment(0, 3)) + nullspace;
       q_old = q;
       q = q + q_diff;
     }
@@ -172,8 +172,8 @@ int main(int argc,char* argv[])
       J_right = J.block(0,0,3,7);
       Jpinv_right = Winv * J_right.transpose() * (J_right * Winv * J_right.transpose() + Cinv).inverse();
       
-      nullspace = (Eigen::MatrixXd::Identity(J_right.size()) - Jpinv_right * J_right) * (q_comf.segment(0, 7) - q);  
-      q_diff = Jpinv_right * (target0 - y1.segment(0, 3)) + nullspace;
+      nullspace = (Eigen::MatrixXd::Identity(J_right.rows(), J_right.cols()) - Jpinv_right * J_right) * (q_comf.segment(0, 7) - q);  
+      q_diff = Jpinv_right * (target0 - y.segment(0, 3)) + nullspace;
       q_old = q;
       q = q + q_diff;
     }
@@ -190,8 +190,8 @@ int main(int argc,char* argv[])
       J_right = J.block(0,0,3,7);
       Jpinv_right = Winv * J_right.transpose() * (J_right * Winv * J_right.transpose() + Cinv).inverse();
       
-      nullspace = (Eigen::MatrixXd::Identity(J_right.size()) - Jpinv_right * J_right) * (q_comf.segment(0, 7) - q);  
-      q_diff = Jpinv_right * (target0 - y1.segment(0, 3)) + nullspace;
+      nullspace = (Eigen::MatrixXd::Identity(J_right.rows(), J_right.cols()) - Jpinv_right * J_right) * (q_comf.segment(0, 7) - q);  
+      q_diff = Jpinv_right * (target0 - y.segment(0, 3)) + nullspace;
       q_old = q;
       q = q + q_diff;
     }
@@ -209,7 +209,7 @@ int main(int argc,char* argv[])
       Jpinv_right = Winv * J_right.transpose() * (J_right * Winv * J_right.transpose() + Cinv).inverse();
       
       //nullspace = (Eigen::MatrixXd::Identity(J_right.size()) - Jpinv_right * J_right) * (q_comf.segment(0, 7) - q);  
-      q_diff = Jpinv_right * (target0 - y1.segment(0, 3)); // + nullspace;
+      q_diff = Jpinv_right * (target0 - y.segment(0, 3)); // + nullspace;
       q_old = q;
       q = q + q_diff;
     }
@@ -227,7 +227,7 @@ int main(int argc,char* argv[])
       Jpinv_right = Winv * J_right.transpose() * (J_right * Winv * J_right.transpose() + Cinv).inverse();
       
       //nullspace = (Eigen::MatrixXd::Identity(J_right.size()) - Jpinv_right * J_right) * (q_comf.segment(0, 7) - q);  
-      q_diff = Jpinv_right * (target0 - y1.segment(0, 3)); // + nullspace;
+      q_diff = Jpinv_right * (target0 - y.segment(0, 3)); // + nullspace;
       q_old = q;
       q = q + q_diff;
     }
@@ -245,7 +245,7 @@ int main(int argc,char* argv[])
       Jpinv_right = Winv * J_right.transpose() * (J_right * Winv * J_right.transpose() + Cinv).inverse();
       
       //nullspace = (Eigen::MatrixXd::Identity(J_right.size()) - Jpinv_right * J_right) * (q_comf.segment(0, 7) - q);  
-      q_diff = Jpinv_right * (target0 - y1.segment(0, 3)); // + nullspace;
+      q_diff = Jpinv_right * (target0 - y.segment(0, 3)); // + nullspace;
       q_old = q;
       q = q + q_diff;
     }
