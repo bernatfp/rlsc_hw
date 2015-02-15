@@ -127,17 +127,17 @@ int main(int argc,char* argv[])
                 J_right = J.block(0,0,3,7);
 
                 std::cout << "Dimensions: " << std::endl;
-                std::cout << "Winv " << Winv.size() << std::endl;
-                std::cout << "J_right " << J_right.size() << std::endl;
-                std::cout << "Cinv " << Cinv.size() << std::endl;
+                std::cout << "Winv " << Winv.rows() << "x" << Winv.cols() << std::endl;
+                std::cout << "J_right " << J_right.rows() << "x" << J_right.cols() << std::endl;
+                std::cout << "Cinv " << Cinv.rows() << "x" << Cinv.cols() << std::endl;
 
                 Jpinv_right = Winv * J_right.transpose() * (J_right * Winv * J_right.transpose() + Cinv).inverse();
                 
-                std::cout << "Jpinv_right " << Jpinv_right.size() << std::endl;
+                std::cout << "Jpinv_right " << Jpinv_right.rows() << "x" << Jpinv_right.cols() << std::endl;
 
                 nullspace = (Eigen::MatrixXd::Identity(J_right.rows(), J_right.cols()) - Jpinv_right * J_right) * (q_comf.segment(0, 7) - q);  
                 
-                std::cout << "nullspace " << nullspace.size() << std::endl;
+                std::cout << "nullspace " << nullspace.rows() << "x" << nullspace.cols() << std::endl;
 
                 q_diff = Jpinv_right * (target.segment(i*3,3) - y.segment(0, 3)) + nullspace;
                 q_old = q;
