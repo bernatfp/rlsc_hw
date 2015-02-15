@@ -109,12 +109,10 @@ int main(int argc,char* argv[])
             
             q_comf = (j < 2) ? q_comf1 : q_comf2; //indicate which comfort position to try in this iteration
 
-            q_comf = q_comf2;
-
             if (j%2 == 0){
               //right
               std::cout << "Right arm" << std::endl;
-              q = Eigen::VectorXd(qstart3.segment(0,7));
+              q = Eigen::VectorXd(qstart1.segment(0,7));
               std::cout << "q: " << q << std::endl;
               while ((q - q_old).cwiseAbs().maxCoeff() > epsilon){
                 //Repeat until change is small enough
@@ -146,6 +144,8 @@ int main(int argc,char* argv[])
                 q = q + 0.1 * q_diff;
                 //sleep(1);
               }
+              q_diff = q - qstart1.segment(0,7);
+
               std::cout << "SUCCESS " << std::endl;
             } else {
               //left
@@ -168,11 +168,12 @@ int main(int argc,char* argv[])
                 q_old = q;
                 q = q + q_diff;
               }
+              q_diff = q - qstart1.segment(9,7);
             }
 
             //Compute cost
-            q_diff = q - qstart1;
-            costs(i,j) = q_diff.transpose() * Winv.inverse() * q_diff;            
+            costs(i,j) = q_diff.transpose() * Winv.inverse() * q_diff;   
+            std::cout << "Cost: " << costs(i,j) << std::endl;         
         }
     }
 
