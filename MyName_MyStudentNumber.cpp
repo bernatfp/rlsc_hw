@@ -78,7 +78,7 @@ int main(int argc,char* argv[])
 
     //Load data & precompute info that is constant in the loop
     bax.GetTargets(target); //load targets (8*3=24 length vector)
-    Eigen::VectorXd y1 = bax.GetIK(qstart1);
+    Eigen::VectorXd y = bax.GetIK(qstart1);
     J = bax.GetJ(qstart1);
     Eigen::MatrixXd J_right = J.block(0,0,3,7);
     Eigen::MatrixXd J_left = J.block(6,7,3,7);
