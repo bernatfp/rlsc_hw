@@ -98,6 +98,10 @@ int main(int argc,char* argv[])
               while ((q - q_old).cwiseAbs().maxCoeff() > epsilon){
                 //Repeat until change is small enough
                 q_merged << q, Eigen::VectorXd::Zero(11);
+                
+                bax.SetJointAngles(q_merged);
+                bax.AdvanceSimulation();
+
                 y = bax.GetIK(q_merged);
                 
                 J = bax.GetJ(qstart1);
@@ -115,6 +119,10 @@ int main(int argc,char* argv[])
               while ((q - q_old).cwiseAbs().maxCoeff() > epsilon){
                 //Repeat until change is small enough
                 q_merged << Eigen::VectorXd::Zero(9), q, Eigen::VectorXd::Zero(2);
+
+                bax.SetJointAngles(q_merged);
+                bax.AdvanceSimulation();
+
                 y = bax.GetIK(q_merged);
 
                 J = bax.GetJ(qstart1);
@@ -134,7 +142,7 @@ int main(int argc,char* argv[])
         }
     }
 
-
+    std::cout << "Costs matrix\n" << costs << std::endl;
 
 
     //Part B
