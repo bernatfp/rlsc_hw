@@ -11,6 +11,7 @@
 
 int main(int argc,char* argv[])
 {
+  std::cout << "Starting..." << std::endl;
   // Create the robot interface object
   BaxterTools bax;
   // Connect to the simulator
@@ -22,14 +23,21 @@ int main(int argc,char* argv[])
   {
     bax.Connect("localhost");
   }
+
+  std::cout << "Connected" << std::endl;
+
   // Start the simulation
 	bax.StartSimulation();
+
+  std::cout << "Simulation started" << std::endl;
 
 	Eigen::VectorXd q = Eigen::VectorXd::Zero(18); // Joint angles
 	Eigen::VectorXd x; // End-effector position
 	Eigen::VectorXd target; // Target positions
 	Eigen::MatrixXd J; // Jacobian matrix
 
+
+  std::cout << "Vars declared" << std::endl;
 
 	//////////////////////////////////////////////////////////////////////
 	// Constants for homework
@@ -54,12 +62,16 @@ int main(int argc,char* argv[])
 	//////////////////////////////////////////////////////////////////////
 
 
+  std::cout << "Constants filled" << std::endl;
+
 	// Loop until 'q' gets pressed
 	char key=0;
 	while(key!='q')
   {
-	// Get pressed key
-	key=bax.GetKey();
+    std::cout << "Press key" << std::endl;
+  	// Get pressed key
+  	key=bax.GetKey();
+    std::cout << "Key extracted: " << key << std::endl;
 
     // Put your code here //////////////////////////
 
