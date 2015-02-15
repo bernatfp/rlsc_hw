@@ -123,7 +123,7 @@ int main(int argc,char* argv[])
 
                 y = bax.GetIK(q_merged);
                 
-                J = bax.GetJ(qstart1);
+                J = bax.GetJ(q_merged);
                 J_right = J.block(0,0,3,7);
 
                 std::cout << "Dimensions: " << std::endl;
@@ -156,7 +156,7 @@ int main(int argc,char* argv[])
 
                 y = bax.GetIK(q_merged);
 
-                J = bax.GetJ(qstart1);
+                J = bax.GetJ(q_merged);
                 J_left = J.block(6,7,3,7);
                 Jpinv_left = Winv * J_left.transpose() * (J_right * Winv * J_left.transpose() + Cinv).inverse();
 
