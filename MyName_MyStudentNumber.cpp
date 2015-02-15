@@ -144,6 +144,7 @@ int main(int argc,char* argv[])
                 q = q + q_diff;
                 sleep(1);
               }
+              std::cout << "SUCCESS " << std::endl;
             } else {
               //left
               q = Eigen::VectorXd(qstart1.segment(9,7));
