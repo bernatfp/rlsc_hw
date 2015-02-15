@@ -142,7 +142,7 @@ int main(int argc,char* argv[])
                 q_diff = (Jpinv_right * (target.segment(i*3,3) - y.segment(0, 3))) + nullspace;
                 q_old = q;
                 q = q + 0.01 * q_diff;
-                sleep(1);
+                //sleep(1);
               }
               std::cout << "SUCCESS " << std::endl;
             } else {
