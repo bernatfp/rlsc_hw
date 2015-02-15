@@ -135,11 +135,11 @@ int main(int argc,char* argv[])
                 
                 std::cout << "Jpinv_right " << Jpinv_right.rows() << "x" << Jpinv_right.cols() << std::endl;
 
-                nullspace = (Eigen::MatrixXd::Identity(7, 7) - Jpinv_right * J_right) * (q_comf.segment(0, 7) - q);  
+                nullspace = (Eigen::MatrixXd::Identity(7, 7) - (Jpinv_right * J_right)) * (q_comf.segment(0, 7) - q);  
                 
                 std::cout << "nullspace " << nullspace.rows() << "x" << nullspace.cols() << std::endl;
 
-                q_diff = Jpinv_right * (target.segment(i*3,3) - y.segment(0, 3)) + nullspace;
+                q_diff = (Jpinv_right * (target.segment(i*3,3) - y.segment(0, 3))) + nullspace;
                 q_old = q;
                 q = q + q_diff;
                 sleep(1);
