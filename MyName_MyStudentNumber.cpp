@@ -161,7 +161,7 @@ int main(int argc,char* argv[])
 
                 J = bax.GetJ(q_merged);
                 J_left = J.block(6,7,3,7);
-                Jpinv_left = Winv * J_left.transpose() * (J_right * Winv * J_left.transpose() + Cinv).inverse();
+                Jpinv_left = Winv * J_left.transpose() * (J_left * Winv * J_left.transpose() + Cinv).inverse();
 
                 nullspace = (Eigen::MatrixXd::Identity(7, 7) - Jpinv_left * J_left) * (q_comf.segment(9, 7) - q);  
                 q_diff = Jpinv_left * (target.segment(i*3,3) - y.segment(6, 3)) + nullspace;
