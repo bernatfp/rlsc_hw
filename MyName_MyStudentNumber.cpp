@@ -166,7 +166,7 @@ int main(int argc,char* argv[])
                 nullspace = (Eigen::MatrixXd::Identity(7, 7) - Jpinv_left * J_left) * (q_comf.segment(9, 7) - q);  
                 q_diff = Jpinv_left * (target.segment(i*3,3) - y.segment(6, 3)) + nullspace;
                 q_old = q;
-                q = q + q_diff;
+                q = q + 0.1 * q_diff;
               }
               q_diff = q - qstart1.segment(9,7);
             }
