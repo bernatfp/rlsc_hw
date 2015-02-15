@@ -144,7 +144,12 @@ int main(int argc,char* argv[])
                 q = q + 0.1 * q_diff;
                 //sleep(1);
               }
-              q_diff = q - qstart1.segment(0,7);
+
+              q_merged << Eigen::VectorXd::Zero(9), q, Eigen::VectorXd::Zero(2);
+              bax.SetJointAngles(q_merged);
+              bax.AdvanceSimulation();
+
+              q_diff = qstart1.segment(0,7) - q;
 
               std::cout << "SUCCESS " << std::endl;
             } else {
@@ -168,7 +173,12 @@ int main(int argc,char* argv[])
                 q_old = q;
                 q = q + 0.1 * q_diff;
               }
-              q_diff = q - qstart1.segment(9,7);
+
+              q_merged << Eigen::VectorXd::Zero(9), q, Eigen::VectorXd::Zero(2);
+              bax.SetJointAngles(q_merged);
+              bax.AdvanceSimulation();
+
+              q_diff = qstart1.segment(9,7) - q;
             }
 
             //Compute cost
