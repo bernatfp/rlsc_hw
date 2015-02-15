@@ -112,7 +112,7 @@ int main(int argc,char* argv[])
             } else {
               //left
               q = Eigen::VectorXd(qstart1.segment(9,7));
-              while ((q - q_old).abs().maxCoeff() > epsilon){
+              while ((q - q_old).cwiseAbs().maxCoeff() > epsilon){
                 //Repeat until change is small enough
                 q_merged << Eigen::VectorXd::Zero(9), q, Eigen::VectorXd::Zero(2);
                 y = bax.GetIK(q_merged);
@@ -144,7 +144,7 @@ int main(int argc,char* argv[])
     //1 (comf)
     q = Eigen::VectorXd(qstart1.segment(0,7));
     q_old = Eigen::VectorXd::Zero(7);
-    while ((q - q_old).abs().maxCoeff() > epsilon){
+    while ((q - q_old).cwiseAbs().maxCoeff() > epsilon){
       //Repeat until change is small enough
       q_merged << q, Eigen::VectorXd::Zero(11);
       y = bax.GetIK(q_merged);
@@ -163,7 +163,7 @@ int main(int argc,char* argv[])
     //2 (comf)
     q = Eigen::VectorXd(qstart2.segment(0,7));
     q_old = Eigen::VectorXd::Zero(7);
-    while ((q - q_old).abs().maxCoeff() > epsilon){
+    while ((q - q_old).cwiseAbs().maxCoeff() > epsilon){
       //Repeat until change is small enough
       q_merged << q, Eigen::VectorXd::Zero(11);
       y = bax.GetIK(q_merged);
@@ -181,7 +181,7 @@ int main(int argc,char* argv[])
     //3 (comf)
     q = Eigen::VectorXd(qstart3.segment(0,7));
     q_old = Eigen::VectorXd::Zero(7);
-    while ((q - q_old).abs().maxCoeff() > epsilon){
+    while ((q - q_old).cwiseAbs().maxCoeff() > epsilon){
       //Repeat until change is small enough
       q_merged << q, Eigen::VectorXd::Zero(11);
       y = bax.GetIK(q_merged);
@@ -199,7 +199,7 @@ int main(int argc,char* argv[])
     //1 (no comf)
     q = Eigen::VectorXd(qstart1.segment(0,7));
     q_old = Eigen::VectorXd::Zero(7);
-    while ((q - q_old).abs().maxCoeff() > epsilon){
+    while ((q - q_old).cwiseAbs().maxCoeff() > epsilon){
       //Repeat until change is small enough
       q_merged << q, Eigen::VectorXd::Zero(11);
       y = bax.GetIK(q_merged);
@@ -217,7 +217,7 @@ int main(int argc,char* argv[])
     //2 (no comf)
     q = Eigen::VectorXd(qstart2.segment(0,7));
     q_old = Eigen::VectorXd::Zero(7);
-    while ((q - q_old).abs().maxCoeff() > epsilon){
+    while ((q - q_old).cwiseAbs().maxCoeff() > epsilon){
       //Repeat until change is small enough
       q_merged << q, Eigen::VectorXd::Zero(11);
       y = bax.GetIK(q_merged);
@@ -235,7 +235,7 @@ int main(int argc,char* argv[])
     //3 (no comf)
     q = Eigen::VectorXd(qstart3.segment(0,7));
     q_old = Eigen::VectorXd::Zero(7);
-    while ((q - q_old).abs().maxCoeff() > epsilon){
+    while ((q - q_old).cwiseAbs().maxCoeff() > epsilon){
       //Repeat until change is small enough
       q_merged << q, Eigen::VectorXd::Zero(11);
       y = bax.GetIK(q_merged);
