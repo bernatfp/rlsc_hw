@@ -135,7 +135,7 @@ int main(int argc,char* argv[])
                 
                 std::cout << "Jpinv_right " << Jpinv_right.rows() << "x" << Jpinv_right.cols() << std::endl;
 
-                nullspace = (Eigen::MatrixXd::Identity(J_right.rows(), J_right.cols()) - Jpinv_right * J_right) * (q_comf.segment(0, 7) - q);  
+                nullspace = (Eigen::MatrixXd::Identity(7, 7) - Jpinv_right * J_right) * (q_comf.segment(0, 7) - q);  
                 
                 std::cout << "nullspace " << nullspace.rows() << "x" << nullspace.cols() << std::endl;
 
@@ -159,7 +159,7 @@ int main(int argc,char* argv[])
                 J_left = J.block(6,7,3,7);
                 Jpinv_left = Winv * J_left.transpose() * (J_right * Winv * J_left.transpose() + Cinv).inverse();
 
-                nullspace = (Eigen::MatrixXd::Identity(J_right.rows(), J_right.cols()) - Jpinv_left * J_left) * (q_comf.segment(9, 7) - q);  
+                nullspace = (Eigen::MatrixXd::Identity(7, 7) - Jpinv_left * J_left) * (q_comf.segment(9, 7) - q);  
                 q_diff = Jpinv_left * (target.segment(i*3,3) - y.segment(6, 3)) + nullspace;
                 q_old = q;
                 q = q + q_diff;
