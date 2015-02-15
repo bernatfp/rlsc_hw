@@ -109,10 +109,12 @@ int main(int argc,char* argv[])
             
             q_comf = (j < 2) ? q_comf1 : q_comf2; //indicate which comfort position to try in this iteration
 
+            q_comf = q_comf2;
+
             if (j%2 == 0){
               //right
               std::cout << "Right arm" << std::endl;
-              q = Eigen::VectorXd(qstart1.segment(0,7));
+              q = Eigen::VectorXd(qstart3.segment(0,7));
               std::cout << "q: " << q << std::endl;
               while ((q - q_old).cwiseAbs().maxCoeff() > epsilon){
                 //Repeat until change is small enough
