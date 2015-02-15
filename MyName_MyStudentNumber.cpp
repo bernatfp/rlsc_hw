@@ -77,6 +77,8 @@ int main(int argc,char* argv[])
 
     //Part A
 
+    std::cout << "Part A" << std::endl;
+
     //Init variables
     int idx; //aux index
     Eigen::MatrixXd costs = Eigen::MatrixXd::Zero(8,4); //Costs
@@ -88,6 +90,8 @@ int main(int argc,char* argv[])
     Eigen::VectorXd q_merged(18); //both arms
     float epsilon = 0.001;
 
+    std::cout << "Vars init" << std::endl;
+
     //Load data & precompute info that is constant in the loop
     bax.GetTargets(target); //load targets (8*3=24 length vector)
     Eigen::VectorXd y = bax.GetIK(qstart1);
@@ -97,6 +101,7 @@ int main(int argc,char* argv[])
     Eigen::MatrixXd Jpinv_right = Winv * J_right.transpose() * (J_right * Winv * J_right.transpose() + Cinv).inverse();
     Eigen::MatrixXd Jpinv_left = Winv * J_left.transpose() * (J_right * Winv * J_left.transpose() + Cinv).inverse();
 
+    std::cout << "Precomputed info before for" << std::endl;
 
     //Compute each pose and cost
     for (int i=0; i<8; i++){
