@@ -129,8 +129,8 @@ int main(int argc,char* argv[])
             }
 
             //Compute cost
-            q_diff = q - qstart1
-            costs[i,j] = q_diff.transpose() * W * q_diff;            
+            q_diff = q - qstart1;
+            costs(i,j) = q_diff.transpose() * W * q_diff;            
         }
     }
 
