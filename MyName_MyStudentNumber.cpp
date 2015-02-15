@@ -139,7 +139,7 @@ int main(int argc,char* argv[])
                 
                 std::cout << "nullspace " << nullspace.rows() << "x" << nullspace.cols() << std::endl;
 
-                q_diff = Jpinv_right * (target.segment(i*3,3) - y.segment(0, 3));// + nullspace;
+                q_diff = Jpinv_right * (target.segment(i*3,3) - y.segment(0, 3)) + nullspace;
                 q_old = q;
                 q = q + q_diff;
                 sleep(1);
