@@ -359,7 +359,7 @@ int main(int argc,char* argv[])
         while ((q - q_old).cwiseAbs().maxCoeff() > epsilon){
           //Repeat until change is small enough
           q_merged << q, Eigen::VectorXd::Zero(11);
-          std::cout << "q_merged: " << q_merged << std::endl;
+          //std::cout << "q_merged: " << q_merged << std::endl;
           bax.SetJointAngles(q_merged);
           bax.AdvanceSimulation();
 
@@ -389,6 +389,7 @@ int main(int argc,char* argv[])
         }
         std::cout << "Assigning row to q_mat" << std::endl;
         q_mat.block(i*3+j,0,1,7) = q;
+        std::cout << "Assigned row to q_mat" << std::endl;
       }
     }
 
