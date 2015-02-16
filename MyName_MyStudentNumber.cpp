@@ -192,7 +192,7 @@ int main(int argc,char* argv[])
 
     std::cout << "Costs matrix\n" << costs << std::endl;
 
-    */
+    
 
     //Part B
 
@@ -332,7 +332,7 @@ int main(int argc,char* argv[])
       q = q + 0.1 * q_diff;
     }
 
-
+    */
 
 
     std::cout << "PART C" << std::endl;
@@ -343,6 +343,7 @@ int main(int argc,char* argv[])
 
     for (int i=0; i<8; i++){
       for (int j=0; j<3; j++){
+        std::cout << "New iteration, i: " << i << "   j: " << j << std::endl;
         switch (j){
           case 0:
               q = Eigen::VectorXd(qstart1.segment(0,7));
@@ -367,14 +368,15 @@ int main(int argc,char* argv[])
           J = bax.GetJ(q_merged);
           J_right = J.block(0,0,3,7);
 
-          std::cout << "Dimensions: " << std::endl;
+          /*std::cout << "Dimensions: " << std::endl;
           std::cout << "Winv " << Winv.rows() << "x" << Winv.cols() << std::endl;
           std::cout << "J_right " << J_right.rows() << "x" << J_right.cols() << std::endl;
           std::cout << "Cinv " << Cinv.rows() << "x" << Cinv.cols() << std::endl;
-
+          */
+          
           Jpinv_right = Winv * J_right.transpose() * (J_right * Winv * J_right.transpose() + Cinv).inverse();
           
-          std::cout << "Jpinv_right " << Jpinv_right.rows() << "x" << Jpinv_right.cols() << std::endl;
+          //std::cout << "Jpinv_right " << Jpinv_right.rows() << "x" << Jpinv_right.cols() << std::endl;
 
           //nullspace = (Eigen::MatrixXd::Identity(7, 7) - (Jpinv_right * J_right)) * (q_comf.segment(0, 7) - q);  
           
@@ -385,7 +387,7 @@ int main(int argc,char* argv[])
           q = q + 0.1 * q_diff;
           //sleep(1);
         }
-
+        std::cout << "Assigning row to q_mat" << std::endl;
         q_mat.block(i*3+j,0,1,7) = q;
       }
     }
