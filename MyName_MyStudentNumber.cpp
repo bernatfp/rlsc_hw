@@ -388,7 +388,7 @@ int main(int argc,char* argv[])
           //sleep(1);
         }
         std::cout << "Assigning row to q_mat" << std::endl;
-        q_mat.block(i*3+j,0,1,7) = q;
+        q_mat.block(i*3+j,0,1,7) = q.transpose();
         std::cout << "Assigned row to q_mat" << std::endl;
       }
     }
