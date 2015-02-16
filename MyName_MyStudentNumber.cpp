@@ -336,6 +336,7 @@ int main(int argc,char* argv[])
 
 
     std::cout << "PART C" << std::endl;
+    sleep(5);
 
     // PART C
     Eigen::MatrixXd q_mat(24,7);
