@@ -400,7 +400,7 @@ int main(int argc,char* argv[])
     std::cout << "Singular values:" << std::endl << svd.singularValues() << std::endl;
     std::cout << "Singular vectors:" << std::endl << svd.matrixU() << std::endl;
     
-    
+    sleep(20);
 
     //DEMO
     std::cout << "Right arm" << std::endl;
