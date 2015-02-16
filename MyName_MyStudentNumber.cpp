@@ -192,6 +192,8 @@ int main(int argc,char* argv[])
 
     //Part B
 
+    std::cout << "Starting Part B" << std::endl;
+
     Eigen::VectorXd target0 = target.segment(0,3);
 
     //1 (comf)
@@ -200,17 +202,20 @@ int main(int argc,char* argv[])
     while ((q - q_old).cwiseAbs().maxCoeff() > epsilon){
       //Repeat until change is small enough
       q_merged << q, Eigen::VectorXd::Zero(11);
+
+      bax.SetJointAngles(q_merged);
+      bax.AdvanceSimulation();
+
       y = bax.GetIK(q_merged);
-      
-      J = bax.GetJ(qstart1);
+      J = bax.GetJ(q_merged);
       J_right = J.block(0,0,3,7);
       Jpinv_right = Winv * J_right.transpose() * (J_right * Winv * J_right.transpose() + Cinv).inverse();
       
 
-      nullspace = (Eigen::MatrixXd::Identity(J_right.rows(), J_right.cols()) - Jpinv_right * J_right) * (q_comf.segment(0, 7) - q);  
+      nullspace = (Eigen::MatrixXd::Identity(7, 7) - Jpinv_right * J_right) * (q_comf.segment(0, 7) - q);  
       q_diff = Jpinv_right * (target0 - y.segment(0, 3)) + nullspace;
       q_old = q;
-      q = q + q_diff;
+      q = q + 0.1 * q_diff;
     }
 
     //2 (comf)
@@ -309,7 +314,102 @@ int main(int argc,char* argv[])
 
 
     // PART C
+    Eigen::MatrixXd q_mat(24,7);
 
+    for (int i=0; i<8; i++){
+      for (int j=0; j<3; j++){
+        switch (j){
+          case 0:
+              q = Eigen::VectorXd(qstart1.segment(0,7));
+            break;
+          case 1:
+              q = Eigen::VectorXd(qstart2.segment(0,7));
+            break;
+          case 2:
+              q = Eigen::VectorXd(qstart3.segment(0,7));
+            break;
+        }
+        q_old = q + epsilon;
+        while ((q - q_old).cwiseAbs().maxCoeff() > epsilon){
+          //Repeat until change is small enough
+          q_merged << q, Eigen::VectorXd::Zero(11);
+          std::cout << "q_merged: " << q_merged << std::endl;
+          bax.SetJointAngles(q_merged);
+          bax.AdvanceSimulation();
+
+          y = bax.GetIK(q_merged);
+          
+          J = bax.GetJ(q_merged);
+          J_right = J.block(0,0,3,7);
+
+          std::cout << "Dimensions: " << std::endl;
+          std::cout << "Winv " << Winv.rows() << "x" << Winv.cols() << std::endl;
+          std::cout << "J_right " << J_right.rows() << "x" << J_right.cols() << std::endl;
+          std::cout << "Cinv " << Cinv.rows() << "x" << Cinv.cols() << std::endl;
+
+          Jpinv_right = Winv * J_right.transpose() * (J_right * Winv * J_right.transpose() + Cinv).inverse();
+          
+          std::cout << "Jpinv_right " << Jpinv_right.rows() << "x" << Jpinv_right.cols() << std::endl;
+
+          //nullspace = (Eigen::MatrixXd::Identity(7, 7) - (Jpinv_right * J_right)) * (q_comf.segment(0, 7) - q);  
+          
+          //std::cout << "nullspace " << nullspace.rows() << "x" << nullspace.cols() << std::endl;
+
+          q_diff = (Jpinv_right * (target.segment(i*3,3) - y.segment(0, 3))); //+ nullspace;
+          q_old = q;
+          q = q + 0.1 * q_diff;
+          //sleep(1);
+        }
+
+        q_mat.block(i*3+j,0,1,7) = q;
+      }
+    }
+
+    //TO DO: RUN PCA
+    Eigen::MatrixXd centered = q_mat.rowwise() - q_mat.colwise().mean();
+    JacobiSVD<MatrixXd> svd(centered, ComputeThinU | ComputeThinV);
+    //JacobiSVD<MatrixXf> svd(centered, ComputeFullU | ComputeFullV);
+    cout << "Singular values:" << endl << svd.singularValues() << endl;
+    cout << "Singular vectors:" << endl << svd.matrixU() << endl;
+    
+    
+
+    //DEMO
+    std::cout << "Right arm" << std::endl;
+    q = Eigen::VectorXd(qstart1.segment(0,7));
+    std::cout << "q: " << q << std::endl;
+    q_old = q + epsilon;
+    q_comf = q_comf1;
+    while ((q - q_old).cwiseAbs().maxCoeff() > epsilon){
+      //Repeat until change is small enough
+      q_merged << q, Eigen::VectorXd::Zero(11);
+      std::cout << "q_merged: " << q_merged << std::endl;
+      bax.SetJointAngles(q_merged);
+      bax.AdvanceSimulation();
+
+      y = bax.GetIK(q_merged);
+      
+      J = bax.GetJ(q_merged);
+      J_right = J.block(0,0,3,7);
+
+      std::cout << "Dimensions: " << std::endl;
+      std::cout << "Winv " << Winv.rows() << "x" << Winv.cols() << std::endl;
+      std::cout << "J_right " << J_right.rows() << "x" << J_right.cols() << std::endl;
+      std::cout << "Cinv " << Cinv.rows() << "x" << Cinv.cols() << std::endl;
+
+      Jpinv_right = Winv * J_right.transpose() * (J_right * Winv * J_right.transpose() + Cinv).inverse();
+      
+      std::cout << "Jpinv_right " << Jpinv_right.rows() << "x" << Jpinv_right.cols() << std::endl;
+
+      nullspace = (Eigen::MatrixXd::Identity(7, 7) - (Jpinv_right * J_right)) * (q_comf.segment(0, 7) - q);  
+      
+      std::cout << "nullspace " << nullspace.rows() << "x" << nullspace.cols() << std::endl;
+
+      q_diff = (Jpinv_right * (target.segment(7*3,3) - y.segment(0, 3))) + nullspace;
+      q_old = q;
+      q = q + 0.1 * q_diff;
+      //sleep(1);
+    }    
 
 
     ////////////////////////////////////////////////
