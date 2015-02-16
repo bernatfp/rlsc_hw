@@ -101,6 +101,9 @@ int main(int argc,char* argv[])
     Eigen::MatrixXd Jpinv_right = Winv * J_right.transpose() * (J_right * Winv * J_right.transpose() + Cinv).inverse();
     Eigen::MatrixXd Jpinv_left = Winv * J_left.transpose() * (J_right * Winv * J_left.transpose() + Cinv).inverse();
 
+
+    /*
+
     std::cout << "Precomputed info before for" << std::endl;
 
     //Compute each pose and cost
@@ -189,6 +192,7 @@ int main(int argc,char* argv[])
 
     std::cout << "Costs matrix\n" << costs << std::endl;
 
+    */
 
     //Part B
 
@@ -305,7 +309,7 @@ int main(int argc,char* argv[])
       q_old = q;
       q = q + 0.1 * q_diff;
     }
-    
+
     //3 (no comf)
     q = Eigen::VectorXd(qstart3.segment(0,7));
     q_old = Eigen::VectorXd::Zero(7);
@@ -331,7 +335,7 @@ int main(int argc,char* argv[])
 
 
 
-
+    std::cout << "PART C" << std::endl;
 
     // PART C
     Eigen::MatrixXd q_mat(24,7);
