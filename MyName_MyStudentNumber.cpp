@@ -224,16 +224,20 @@ int main(int argc,char* argv[])
     while ((q - q_old).cwiseAbs().maxCoeff() > epsilon){
       //Repeat until change is small enough
       q_merged << q, Eigen::VectorXd::Zero(11);
+
+      bax.SetJointAngles(q_merged);
+      bax.AdvanceSimulation();
+
       y = bax.GetIK(q_merged);
-      
-      J = bax.GetJ(qstart1);
+      J = bax.GetJ(q_merged);
       J_right = J.block(0,0,3,7);
       Jpinv_right = Winv * J_right.transpose() * (J_right * Winv * J_right.transpose() + Cinv).inverse();
       
-      nullspace = (Eigen::MatrixXd::Identity(J_right.rows(), J_right.cols()) - Jpinv_right * J_right) * (q_comf.segment(0, 7) - q);  
+
+      nullspace = (Eigen::MatrixXd::Identity(7, 7) - Jpinv_right * J_right) * (q_comf.segment(0, 7) - q);  
       q_diff = Jpinv_right * (target0 - y.segment(0, 3)) + nullspace;
       q_old = q;
-      q = q + q_diff;
+      q = q + 0.1 * q_diff;
     }
 
     //3 (comf)
@@ -242,16 +246,20 @@ int main(int argc,char* argv[])
     while ((q - q_old).cwiseAbs().maxCoeff() > epsilon){
       //Repeat until change is small enough
       q_merged << q, Eigen::VectorXd::Zero(11);
+
+      bax.SetJointAngles(q_merged);
+      bax.AdvanceSimulation();
+
       y = bax.GetIK(q_merged);
-      
-      J = bax.GetJ(qstart1);
+      J = bax.GetJ(q_merged);
       J_right = J.block(0,0,3,7);
       Jpinv_right = Winv * J_right.transpose() * (J_right * Winv * J_right.transpose() + Cinv).inverse();
       
-      nullspace = (Eigen::MatrixXd::Identity(J_right.rows(), J_right.cols()) - Jpinv_right * J_right) * (q_comf.segment(0, 7) - q);  
+
+      nullspace = (Eigen::MatrixXd::Identity(7, 7) - Jpinv_right * J_right) * (q_comf.segment(0, 7) - q);  
       q_diff = Jpinv_right * (target0 - y.segment(0, 3)) + nullspace;
       q_old = q;
-      q = q + q_diff;
+      q = q + 0.1 * q_diff;
     }
 
     //1 (no comf)
@@ -260,16 +268,20 @@ int main(int argc,char* argv[])
     while ((q - q_old).cwiseAbs().maxCoeff() > epsilon){
       //Repeat until change is small enough
       q_merged << q, Eigen::VectorXd::Zero(11);
+
+      bax.SetJointAngles(q_merged);
+      bax.AdvanceSimulation();
+
       y = bax.GetIK(q_merged);
-      
-      J = bax.GetJ(qstart1);
+      J = bax.GetJ(q_merged);
       J_right = J.block(0,0,3,7);
       Jpinv_right = Winv * J_right.transpose() * (J_right * Winv * J_right.transpose() + Cinv).inverse();
       
-      //nullspace = (Eigen::MatrixXd::Identity(J_right.size()) - Jpinv_right * J_right) * (q_comf.segment(0, 7) - q);  
-      q_diff = Jpinv_right * (target0 - y.segment(0, 3)); // + nullspace;
+
+      //nullspace = (Eigen::MatrixXd::Identity(7, 7) - Jpinv_right * J_right) * (q_comf.segment(0, 7) - q);  
+      q_diff = Jpinv_right * (target0 - y.segment(0, 3));// + nullspace;
       q_old = q;
-      q = q + q_diff;
+      q = q + 0.1 * q_diff;
     }
 
     //2 (no comf)
@@ -278,34 +290,42 @@ int main(int argc,char* argv[])
     while ((q - q_old).cwiseAbs().maxCoeff() > epsilon){
       //Repeat until change is small enough
       q_merged << q, Eigen::VectorXd::Zero(11);
+
+      bax.SetJointAngles(q_merged);
+      bax.AdvanceSimulation();
+
       y = bax.GetIK(q_merged);
-      
-      J = bax.GetJ(qstart1);
+      J = bax.GetJ(q_merged);
       J_right = J.block(0,0,3,7);
       Jpinv_right = Winv * J_right.transpose() * (J_right * Winv * J_right.transpose() + Cinv).inverse();
       
-      //nullspace = (Eigen::MatrixXd::Identity(J_right.size()) - Jpinv_right * J_right) * (q_comf.segment(0, 7) - q);  
-      q_diff = Jpinv_right * (target0 - y.segment(0, 3)); // + nullspace;
-      q_old = q;
-      q = q + q_diff;
-    }
 
+      //nullspace = (Eigen::MatrixXd::Identity(7, 7) - Jpinv_right * J_right) * (q_comf.segment(0, 7) - q);  
+      q_diff = Jpinv_right * (target0 - y.segment(0, 3));// + nullspace;
+      q_old = q;
+      q = q + 0.1 * q_diff;
+    }
+    
     //3 (no comf)
     q = Eigen::VectorXd(qstart3.segment(0,7));
     q_old = Eigen::VectorXd::Zero(7);
     while ((q - q_old).cwiseAbs().maxCoeff() > epsilon){
       //Repeat until change is small enough
       q_merged << q, Eigen::VectorXd::Zero(11);
+
+      bax.SetJointAngles(q_merged);
+      bax.AdvanceSimulation();
+
       y = bax.GetIK(q_merged);
-      
-      J = bax.GetJ(qstart1);
+      J = bax.GetJ(q_merged);
       J_right = J.block(0,0,3,7);
       Jpinv_right = Winv * J_right.transpose() * (J_right * Winv * J_right.transpose() + Cinv).inverse();
       
-      //nullspace = (Eigen::MatrixXd::Identity(J_right.size()) - Jpinv_right * J_right) * (q_comf.segment(0, 7) - q);  
-      q_diff = Jpinv_right * (target0 - y.segment(0, 3)); // + nullspace;
+
+      //nullspace = (Eigen::MatrixXd::Identity(7, 7) - Jpinv_right * J_right) * (q_comf.segment(0, 7) - q);  
+      q_diff = Jpinv_right * (target0 - y.segment(0, 3));// + nullspace;
       q_old = q;
-      q = q + q_diff;
+      q = q + 0.1 * q_diff;
     }
 
 
