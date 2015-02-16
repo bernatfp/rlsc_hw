@@ -328,8 +328,8 @@ int main(int argc,char* argv[])
           case 2:
               q = Eigen::VectorXd(qstart3.segment(0,7));
             break;
-        }
-        q_old = q + epsilon;
+        };  
+        q_old = Eigen::VectorXd::Zero(7);
         while ((q - q_old).cwiseAbs().maxCoeff() > epsilon){
           //Repeat until change is small enough
           q_merged << q, Eigen::VectorXd::Zero(11);
@@ -367,10 +367,10 @@ int main(int argc,char* argv[])
 
     //TO DO: RUN PCA
     Eigen::MatrixXd centered = q_mat.rowwise() - q_mat.colwise().mean();
-    JacobiSVD<MatrixXd> svd(centered, ComputeThinU | ComputeThinV);
+    Eigen::JacobiSVD<Eigen::MatrixXd> svd(centered, Eigen::ComputeThinU | Eigen::ComputeThinV);
     //JacobiSVD<MatrixXf> svd(centered, ComputeFullU | ComputeFullV);
-    cout << "Singular values:" << endl << svd.singularValues() << endl;
-    cout << "Singular vectors:" << endl << svd.matrixU() << endl;
+    std::cout << "Singular values:" << std::endl << svd.singularValues() << std::endl;
+    std::cout << "Singular vectors:" << std::endl << svd.matrixU() << std::endl;
     
     
 
