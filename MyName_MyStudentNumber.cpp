@@ -378,7 +378,7 @@ int main(int argc,char* argv[])
     std::cout << "Right arm" << std::endl;
     q = Eigen::VectorXd(qstart1.segment(0,7));
     std::cout << "q: " << q << std::endl;
-    q_old = q + epsilon;
+    q_old = Eigen::VectorXd::Zero(7);
     q_comf = q_comf1;
     while ((q - q_old).cwiseAbs().maxCoeff() > epsilon){
       //Repeat until change is small enough
