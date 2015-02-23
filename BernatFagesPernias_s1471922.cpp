@@ -192,7 +192,7 @@ int main(int argc,char* argv[])
 
     std::cout << "Costs matrix\n" << costs << std::endl;
 
-    
+    */
 
     //Part B
 
@@ -203,6 +203,10 @@ int main(int argc,char* argv[])
     //1 (comf)
     q = Eigen::VectorXd(qstart1.segment(0,7));
     q_old = Eigen::VectorXd::Zero(7);
+
+    std::cout << "1 - comf" << std::endl;
+    std::cout << q << std::endl;
+
     while ((q - q_old).cwiseAbs().maxCoeff() > epsilon){
       //Repeat until change is small enough
       q_merged << q, Eigen::VectorXd::Zero(11);
@@ -221,10 +225,18 @@ int main(int argc,char* argv[])
       q_old = q;
       q = q + 0.1 * q_diff;
     }
+
+    std::cout << q << std::endl;
+    std::cout << " " << std::endl;
+
 
     //2 (comf)
     q = Eigen::VectorXd(qstart2.segment(0,7));
     q_old = Eigen::VectorXd::Zero(7);
+
+    std::cout << "2 - comf" << std::endl;
+    std::cout << q << std::endl;
+
     while ((q - q_old).cwiseAbs().maxCoeff() > epsilon){
       //Repeat until change is small enough
       q_merged << q, Eigen::VectorXd::Zero(11);
@@ -243,10 +255,18 @@ int main(int argc,char* argv[])
       q_old = q;
       q = q + 0.1 * q_diff;
     }
+
+    std::cout << q << std::endl;
+    std::cout << " " << std::endl;
+
 
     //3 (comf)
     q = Eigen::VectorXd(qstart3.segment(0,7));
     q_old = Eigen::VectorXd::Zero(7);
+
+    std::cout << "3 - comf" << std::endl;
+    std::cout << q << std::endl;
+
     while ((q - q_old).cwiseAbs().maxCoeff() > epsilon){
       //Repeat until change is small enough
       q_merged << q, Eigen::VectorXd::Zero(11);
@@ -266,9 +286,17 @@ int main(int argc,char* argv[])
       q = q + 0.1 * q_diff;
     }
 
+    std::cout << q << std::endl;
+    std::cout << " " << std::endl;
+
+
     //1 (no comf)
     q = Eigen::VectorXd(qstart1.segment(0,7));
     q_old = Eigen::VectorXd::Zero(7);
+
+    std::cout << "1 - no comf" << std::endl;
+    std::cout << q << std::endl;
+
     while ((q - q_old).cwiseAbs().maxCoeff() > epsilon){
       //Repeat until change is small enough
       q_merged << q, Eigen::VectorXd::Zero(11);
@@ -287,10 +315,18 @@ int main(int argc,char* argv[])
       q_old = q;
       q = q + 0.1 * q_diff;
     }
+
+    std::cout << q << std::endl;
+    std::cout << " " << std::endl;
+
 
     //2 (no comf)
     q = Eigen::VectorXd(qstart2.segment(0,7));
     q_old = Eigen::VectorXd::Zero(7);
+
+    std::cout << "2 - no comf" << std::endl;
+    std::cout << q << std::endl;
+
     while ((q - q_old).cwiseAbs().maxCoeff() > epsilon){
       //Repeat until change is small enough
       q_merged << q, Eigen::VectorXd::Zero(11);
@@ -309,10 +345,18 @@ int main(int argc,char* argv[])
       q_old = q;
       q = q + 0.1 * q_diff;
     }
+
+    std::cout << q << std::endl;
+    std::cout << " " << std::endl;
+
 
     //3 (no comf)
     q = Eigen::VectorXd(qstart3.segment(0,7));
     q_old = Eigen::VectorXd::Zero(7);
+
+    std::cout << "3 - no comf" << std::endl;
+    std::cout << q << std::endl;
+
     while ((q - q_old).cwiseAbs().maxCoeff() > epsilon){
       //Repeat until change is small enough
       q_merged << q, Eigen::VectorXd::Zero(11);
@@ -332,11 +376,15 @@ int main(int argc,char* argv[])
       q = q + 0.1 * q_diff;
     }
 
+    std::cout << q << std::endl;
+    std::cout << " " << std::endl;
+
     
+    sleep(20);
+    return(0);
 
 
     std::cout << "PART C" << std::endl;
-    sleep(5);
 
     // PART C
     Eigen::MatrixXd q_mat(24,7);
@@ -402,7 +450,7 @@ int main(int argc,char* argv[])
     
     sleep(20);
 
-    */
+    
 
     //DEMO
     std::cout << "Right arm" << std::endl;
