@@ -226,6 +226,7 @@ int main(int argc,char* argv[])
       q = q + 0.1 * q_diff;
     }
 
+    std::cout << " " << std::endl;
     std::cout << q << std::endl;
     std::cout << " " << std::endl;
 
@@ -256,6 +257,7 @@ int main(int argc,char* argv[])
       q = q + 0.1 * q_diff;
     }
 
+    std::cout << " " << std::endl;
     std::cout << q << std::endl;
     std::cout << " " << std::endl;
 
@@ -286,6 +288,7 @@ int main(int argc,char* argv[])
       q = q + 0.1 * q_diff;
     }
 
+    std::cout << " " << std::endl;
     std::cout << q << std::endl;
     std::cout << " " << std::endl;
 
@@ -316,6 +319,7 @@ int main(int argc,char* argv[])
       q = q + 0.1 * q_diff;
     }
 
+    std::cout << " " << std::endl;
     std::cout << q << std::endl;
     std::cout << " " << std::endl;
 
@@ -346,6 +350,7 @@ int main(int argc,char* argv[])
       q = q + 0.1 * q_diff;
     }
 
+    std::cout << " " << std::endl;
     std::cout << q << std::endl;
     std::cout << " " << std::endl;
 
@@ -376,6 +381,7 @@ int main(int argc,char* argv[])
       q = q + 0.1 * q_diff;
     }
 
+    std::cout << " " << std::endl;
     std::cout << q << std::endl;
     std::cout << " " << std::endl;
 
