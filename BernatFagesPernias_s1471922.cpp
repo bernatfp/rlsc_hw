@@ -102,7 +102,7 @@ int main(int argc,char* argv[])
     Eigen::MatrixXd Jpinv_left = Winv * J_left.transpose() * (J_right * Winv * J_left.transpose() + Cinv).inverse();
 
 
-    /*
+    
 
     std::cout << "Precomputed info before for" << std::endl;
 
@@ -192,7 +192,7 @@ int main(int argc,char* argv[])
 
     std::cout << "Costs matrix\n" << costs << std::endl;
 
-    */
+    
 
     //Part B
 
@@ -387,7 +387,6 @@ int main(int argc,char* argv[])
 
     
     sleep(20);
-    return(0);
 
 
     std::cout << "PART C" << std::endl;
